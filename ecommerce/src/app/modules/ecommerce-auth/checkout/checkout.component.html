@@ -1,0 +1,198 @@
+
+
+<!------start Breadcurm  -->
+
+<div class="container py-4 flex justify-between">
+    <div class="flex gap-3 items-center">
+        <a class="text-primary text-base" href="index.html"> <i class="fa fa-home"></i></a>
+        <span class="text-sm text-gray-600"> <i class="fa-solid fa-angle-right fa-lg"></i></span>
+        <p class="text-gray-900 font-medium">Checkout</p>
+
+    </div>
+</div>
+
+
+
+<!------END Breadcurm -->
+
+
+<div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4">
+    <div class="lg:col-span-1  px-4">
+    <span (click)="resetAddress()" class="text-xl cursor-pointer"><i class="fa-regular fa-file"></i> NEW</span>
+    </div>
+    <div class="lg:col-span-2 border border-gray-600 bg-gray-300 rounded-lg px-4" *ngFor="let address of listAddress">
+        <h3 class="text-xl font-medium mb-2 mt-2 uppercase">Address     <span (click)="delete(address.id)" class="text-xs cursor-pointer"><i class="fa-solid fa-trash"></i> </span>   </h3>
+      
+        <div class="space-y-0.5">
+            <h5 class="font-medium">{{address.full_name}}</h5>
+            <h5 class="font-medium">{{address.full_surname}}</h5>
+         
+            <h5 class="font-medium">{{address.company_name}}</h5>
+         
+            <h5 class="font-medium">{{address.country}}</h5>
+            <h5 class="font-medium">{{address.city}}</h5>
+            <h5 class="font-medium">{{address.zip_code}}</h5>
+            <h5 class="font-medium">{{address.phone}}</h5>
+            <h5 class="font-medium">{{address.email}}</h5>
+         
+
+          
+
+        </div>
+       
+      
+     
+        <div class="mt-4">
+            <button (click)="selectAddress(address)" class="block mb-4 w-full py-2 text-center text-white bg-primary border
+             border-primary rounded-xl uppercase hover:bg-transparent hover:text-primary transition ">SELECT</button>
+
+
+        </div>
+
+        
+
+    
+    
+    </div>
+
+
+</div>
+
+<div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4">
+
+    <div class="lg:col-span-8 border border-gray-600 bg-gray-300 rounded-lg px-4">
+       
+            <h3 class="text-lg font-medium mb-10 mt-2">User Details Form</h3>
+
+            <div class="space-y-7 mb-7">
+                    <div class="grid sm:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="text-gray-600 mb-3 block"> Name <span class="text-primary" > * </span></label>
+                            <input type="text" class="input-box" [(ngModel)]="full_name" placeholder="name">
+                        </div>
+                        <div>
+                            <label class="text-gray-600 mb-3 block"> Surname <span class="text-primary" > * </span></label>
+                            <input type="text" class="input-box"  [(ngModel)]="full_surname" placeholder="Surname">
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label class="text-gray-600 mb-3 block"> Email <span class="text-primary" > * </span></label>
+                        <input type="text" class="input-box" [(ngModel)]="email" placeholder="name">
+                    </div>
+
+                    <div>
+                        <label class="text-gray-600 mb-3 block"> Phone <span class="text-primary" > * </span></label>
+                        <input type="text" class="input-box" [(ngModel)]="phone" placeholder="Phone">
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="text-gray-600 mb-3 block"> City <span class="text-primary" > * </span></label>
+                            <input type="text" class="input-box" [(ngModel)]="city" placeholder="City">
+                        </div>
+                        <div>
+                            <label class="text-gray-600 mb-3 block"> Country <span class="text-primary" > * </span></label>
+                            <input type="text" class="input-box" [(ngModel)]="country" placeholder="Country">
+                        </div>
+
+                    </div>
+
+                  
+                    <div>
+                        <label class="text-gray-600 mb-3 block"> Zip Code <span class="text-primary" > * </span></label>
+                        <input type="text" class="input-box" [(ngModel)]="zip_code" placeholder="Phone">
+                    </div>
+
+                    
+
+                    <div>
+                        <label class="text-gray-600 mb-3 block"> Company Name </label>
+                        <input type="text" class="input-box"  [(ngModel)]="company_name" placeholder="name">
+                    </div>
+
+                    <button (click)="save()" class="block mb-4 w-full py-2 text-center text-white bg-primary border
+                    border-primary rounded-xl uppercase hover:bg-transparent hover:text-primary transition ">SAVE</button>
+
+                 
+                    <div class="lg:col-span-4 col-span-4 flex flex-col" *ngIf="registrationSuccess">
+                        <div class="bg-green-600 px-5 py-5 rounded-xl text-slate-950">
+                            <i class="fa-solid fa-check"></i>  {{successMessage}}
+                        </div>
+    
+                    </div>
+
+                    <div class="lg:col-span-4 col-span-4 flex flex-col" *ngIf="registrationError">
+                        <div class="bg-red-600 px-5 py-5 rounded-xl text-slate-950">
+                            <i class="fa-solid fa-check"></i>  {{errorMessage}}
+                        </div>
+    
+                    </div>
+
+                    
+             </div>
+
+
+       
+    </div>
+
+    <div class="lg:col-span-4 border border-gray-600 bg-gray-300 rounded-lg px-4">
+        <h3 class="text-lg font-medium mb-10 mt-2">Checkout Review </h3>
+
+        <div class="space-y-7 mb-7">
+
+            <div class="flex justify-between" *ngFor="let cart of listCarts">
+                <div>
+                    <h5 class="font-medium uppercase">{{cart.product.title}}</h5>
+
+                </div>
+                    <p class="text-sm"> {{cart.quantity}} </p>
+                    <p class="font-medium">${{cart.total}}</p>
+                
+            </div>
+
+          
+
+        </div>
+        <div class="flex justify-between">
+           <h4 class="uppercase font-medium">subtotal</h4>
+           <p class="uppercase font-medium">${{Subtotal}}</p> 
+        </div>
+
+        <div class="flex justify-between">
+            <h4 class="uppercase font-medium">Shipping</h4>
+            <p class="uppercase font-medium">Free</p> 
+         </div>
+
+         <div class="flex justify-between">
+            <h4 class="uppercase font-medium">Total</h4>
+            <p class="uppercase font-medium">${{TotalPrice}}</p> 
+         </div>
+
+         <div class="flex items-center justify-between mt-6">
+
+            <div class="flex items-center">
+                <input type="checkbox" class="text-primary focus:ring-0 rounded-xl cursor-pointer">
+                <p class="text-gray-800 ml-3">I agree</p>
+
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button (click)="Ordercomplete()" class="block mb-4 w-full py-2 text-center text-white bg-primary border
+             border-primary rounded-xl uppercase hover:bg-transparent hover:text-primary transition ">CHECKOUT</button>
+
+
+        </div>
+
+        
+
+    
+    
+    </div>
+
+
+
+</div>
+

@@ -1,0 +1,171 @@
+
+
+
+
+<app-slider></app-slider>
+
+
+  
+ <!------Slider End-->
+
+        <!------Features Start-->
+
+       
+       <div class="container">
+
+        <div class="justify-center mx-auto grid md:grid-cols-3 lg:w-10/12 lg:gap-6 mt-3 ">
+
+            <div class="border border-primary rounded-xl px-8 flex justify-center
+             items-center transition lg:px-3 lg:py-6 gap-5 mb-2 ml-1 ">
+
+                <i class="fa-solid fa-truck fa-2xl"></i>
+
+                <div class="px-3 py-2 space-y-1">
+                <h4 class="font-medium capitalize text-lg" >Free Shipping</h4>
+                <p class="text-gray-500 text-xs lg:text-sm">Order over $50</p>
+            </div>
+            </div>
+
+            <div class="border border-primary rounded-xl px-8 flex justify-center
+             items-center transition lg:px-3 lg:py-6 gap-5 mb-2 ml-1 ">
+
+                <i class="fa-regular fa-envelope fa-2xl"></i>
+                <div class="px-3 py-2 space-y-1">
+                <h4 class="font-medium capitalize text-lg" >7/24 Support</h4>
+                <p class="text-gray-500 text-xs lg:text-sm">Customer Support</p>
+            </div>
+            </div>
+
+            <div class="border border-primary rounded-xl px-8 flex justify-center
+             items-center transition lg:px-3 lg:py-6 gap-5 mb-2 ml-1">
+
+             <i class="fa-solid fa-money-bill fa-2xl"></i>
+
+                <div class="px-3 py-2 space-y-1">
+                <h4 class="font-medium capitalize text-lg" >Money Returns</h4>
+                <p class="text-gray-500 text-xs lg:text-sm">7 Days Money Returns</p>
+            </div>
+            </div>
+
+
+        </div>
+
+        
+
+       </div>
+
+     <!------Features End-->
+
+
+      <!------Categorys Start-->
+
+      <div class="container pb-16 pt-8">
+        <h2 class="text-2xl md:text-3xl font-medium uppercase font-poppins mb-6 text-gray-800" >Shop by Category</h2>
+
+        <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-3">
+
+             <!------Single Categorys Start-->
+            <div *ngFor="let category of categories" class="overflow-hidden relative group rounded-xl">
+                <img src="{{URL}}storage/{{category.images}}" class="w-full"/>
+                <a href="#" class="absolute inset-0 flex items-center justify-center text-xl
+                 text-white font-roboto font-medium bg-black bg-opacity-60 hover:bg-opacity-40 transition">{{category.name}}</a>
+
+
+            </div>
+             <!------Single Categorys END-->
+
+           
+             <!------Single Categorys END-->
+
+        </div>
+
+      </div>
+
+  
+
+
+      <!------Categorys End-->
+
+
+        <!------Product Area Start-->
+
+        <div class="container pb-16">
+            <h2 class="text-2xl md:text-3xl font-medium uppercase font-poppins mb-6 text-gray-800" >Top Product</h2>
+
+            <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
+
+                <div *ngFor="let product of products">
+                    <app-product [product]="product"></app-product>
+                    </div>
+
+
+               
+
+
+                
+
+                </div>
+
+                    
+      
+      
+      
+      </div>
+         <!------Product Area End-->
+
+
+               <!------offers Area Start-->
+
+               <div class="container pb-16  hidden lg:block">
+                <a href="#">
+
+                    <img src="assets/img/offer.jpg" class="w-full" />
+                </a>
+
+
+
+               </div>
+
+               <div class="container pb-16   lg:hidden">
+                <a href="#">
+
+                    <img src="assets/img/offer-mobile.jpg" class="w-full" />
+                </a>
+
+
+
+               </div>
+
+
+
+                     <!------offers Area End-->
+
+                        <!------Product Area Start-->
+
+         <!------Product Area End-->
+
+          <!------Product Area Start-->
+
+        <div class="container pb-16">
+            <h2 class="text-2xl md:text-3xl font-medium uppercase font-poppins mb-6 text-gray-800" >Top Product</h2>
+
+            <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
+
+                <div *ngFor="let product of productsb">
+                    <app-product [product]="product"></app-product>
+                    </div>
+
+
+               
+
+
+                
+
+                </div>
+
+                    
+      
+      
+      
+      </div>
+         <!------Product Area End-->

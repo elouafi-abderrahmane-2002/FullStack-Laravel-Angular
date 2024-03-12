@@ -1,0 +1,49 @@
+   <!-------------Second start-->
+   <div [@slideIn] class="container mx-auto lg:p-4 p-0">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+
+
+
+
+
+
+
+        <div class="bg-primary-900 rounded-lg p-4 shadow-md col-span-3">
+            <h2 class="text-2xl font-semibold text-white mb-8">Last Orders</h2>
+
+            <div class="overflow-x-auto">
+
+                <table class="min-w-full divide-y divide-second-900">
+                    <thead>
+                        <tr>
+                            <th class="uppercase text-second-900 font-medium text-xs bg-primary-700 px-6 py-3">id</th>
+                            <th class="uppercase text-second-900 font-medium text-xs bg-primary-700 px-6 py-3">subtotal</th>
+                            <th class="uppercase text-second-900 font-medium text-xs bg-primary-700 px-6 py-3">total</th>
+                         
+                        </tr>
+                    </thead>
+                    <tbody class="bg-primary-400 divide-y divide-second-900">
+                        <tr *ngFor="let order of orders">
+
+                            <th class="px-6 py-3 whitespace-nowrap text-sm text-white">{{order.id}}</th>
+                            <th class="px-6 py-3 whitespace-nowrap text-sm text-white">{{order.subtotal}}</th>
+                            <th class="px-6 py-3 whitespace-nowrap text-sm text-white">{{order.total}}</th>
+                       
+                            
+                        </tr>
+
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!-------------Second End-->
