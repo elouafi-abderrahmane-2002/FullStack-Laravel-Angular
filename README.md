@@ -1,65 +1,132 @@
-<a href="https://www.youtube.com/watch?v=rRYKIWMkUGQ" target="_blank">
-  <div style="position: relative; display: inline-block;">
-    <img src="https://img.youtube.com/vi/rRYKIWMkUGQ/0.jpg" alt="Udemy Kurs vs" width="560" height="315">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-      <div style="width: 0; height: 0; border-style: solid; border-width: 20px 0 20px 40px; border-color: transparent transparent transparent #fff;"></div>
-    </div>
-  </div>
-</a>
-<object width="425" height="350">
-  <param name="movie" value="http://www.youtube.com/user/wwwLoveWatercom?v=BTRN1YETpyg" />
-  <param name="wmode" value="transparent" />
-  <embed src="http://www.youtube.com/user/wwwLoveWatercom?v=BTRN1YETpyg"
-         type="application/x-shockwave-flash"
-         wmode="transparent" width="425" height="350" />
-</object>
+# 🛒 Full-Stack E-Commerce App — Laravel + Angular
 
+I wanted to build something end-to-end. Not a tutorial app, not a CRUD demo — a real project where
+I had to think about architecture, security, deployment, and how the frontend and backend actually
+talk to each other under real conditions.
 
-    Tanıtım videosunu YouTube'dan izleyebilirsiniz.
-
-      Bu depo, Udemy için özel olarak hazırlanmıştır. 
---------------------------------------------------------------
-
-      You can watch the introductory video on YouTube.
-
-      This repository has been specifically created for Udemy.
-
- --------------------------------------------------------------
-https://www.youtube.com/watch?v=rRYKIWMkUGQ
-
-# FullStack-Laravel-Angular
-
-<!-- Example: README.md file -->
-# My GitHub Repository
-
-Check out my awesome video!
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rRYKIWMkUGQ?si=dlCEgyaNixM1kB0w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
-
-# Laravel & Angular E-Commerce Website
-
-![Project Status](https://img.shields.io/badge/Status-In%20Progress-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-
-This project is being prepared for an upcoming Udemy course.
-
-## Project Description
-
-This repository is dedicated to the development of an e-commerce website using Laravel and Angular. The project is currently in the preparation phase for an upcoming Udemy course, and more details will be added as the development progresses.
-
-## Status
-
-The project is actively being prepared for an Udemy course, and updates will be made regularly. Please stay tuned for further information.
-
-## Contribution
-
-Contributions are not being accepted at this time as the project is still in its early stages.
-
-## License
+This e-commerce app is that project.
 
 ---
-© 2023 E-Commerce Project. All rights reserved.
 
+## How it's structured
 
+```
+  Browser (Angular SPA)
+       │
+       │  HTTP/REST (JSON)
+       │  Authorization: Bearer <JWT>
+       ▼
+  ┌─────────────────────────────────┐
+  │        Laravel API Backend      │
+  │  ┌──────────┐  ┌─────────────┐ │
+  │  │  Routes  │  │ Middleware  │ │
+  │  │  /api/v1 │  │ JWT Auth    │ │
+  │  └────┬─────┘  └──────┬──────┘ │
+  │       │               │        │
+  │  ┌────▼───────────────▼──────┐ │
+  │  │      Controllers           │ │
+  │  │  ProductController         │ │
+  │  │  OrderController           │ │
+  │  │  AuthController            │ │
+  │  └────────────┬──────────────┘ │
+  │               │                │
+  │  ┌────────────▼──────────────┐ │
+  │  │    Eloquent ORM / MySQL   │ │
+  │  └───────────────────────────┘ │
+  └─────────────────────────────────┘
+       │
+       ▼
+  MySQL Database
+```
+
+---
+
+## What's inside
+
+**Backend (Laravel)**
+- RESTful API with versioned routes (`/api/v1/...`)
+- JWT authentication via `tymon/jwt-auth` — login, register, refresh, logout
+- Product catalog with categories, filtering, pagination
+- Order management with status transitions
+- OWASP-aware middleware: rate limiting, input validation, CORS config
+- PHPUnit tests for auth and order flows
+
+**Frontend (Angular)**
+- Standalone components with lazy-loaded feature modules
+- `HttpInterceptor` for automatic JWT header injection and 401 handling
+- Responsive product grid + cart built with Bootstrap 5
+- Route guards protecting authenticated pages
+- Environment-based API URL config (dev / prod)
+
+**DevOps**
+- Docker Compose: Laravel app + MySQL + Nginx
+- `.env`-based secrets management — no credentials in code
+
+---
+
+## Running it locally
+
+```bash
+git clone https://github.com/elouafi-abderrahmane-2002/FullStack-Laravel-Angular.git
+cd FullStack-Laravel-Angular
+
+# Start containers
+docker-compose up -d
+
+# Install Laravel dependencies
+docker exec app composer install
+docker exec app php artisan migrate --seed
+docker exec app php artisan jwt:secret
+
+# Install Angular dependencies
+cd frontend && npm install && ng serve
+```
+
+App: `http://localhost:4200` | API: `http://localhost:8000/api/v1`
+
+---
+
+## Request lifecycle (example: add to cart)
+
+```
+  Angular CartService
+       │  POST /api/v1/cart/items
+       │  { "product_id": 42, "qty": 2 }
+       │
+       ▼
+  JWT Middleware ──► valid? ──► No ──► 401 Unauthorized
+       │
+       ▼ Yes
+  CartController@store
+       │
+       ├── validate input (qty > 0, product exists)
+       ├── check stock availability
+       └── CartItem::create([...])
+            │
+            ▼
+       MySQL  →  cart_items table
+            │
+            ▼
+  JSON Response { cart_id, items, total }
+       │
+       ▼
+  Angular updates CartComponent state
+```
+
+---
+
+## What I actually struggled with
+
+JWT refresh logic was messier than I expected. When an access token expires mid-session, you need
+to silently refresh it before retrying the failed request — without the user noticing. Getting the
+Angular interceptor to queue concurrent requests during refresh (instead of firing multiple refresh
+calls at once) took me a while to get right. Race conditions in async code are humbling.
+
+Also: setting up CORS correctly between the Laravel API and the Angular dev server.
+It's one of those things that seems trivial until it's 2am and you're staring at a
+`Access-Control-Allow-Origin` error that makes no sense.
+
+---
+
+*Final-year engineering project — ENSET Mohammedia, Big Data & Cloud Computing*
+*By **Abderrahmane Elouafi** · [LinkedIn](https://www.linkedin.com/in/abderrahmane-elouafi-43226736b/) · [Portfolio](https://my-first-porfolio-six.vercel.app/)*
